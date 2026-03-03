@@ -52,6 +52,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
+    // Optional: get Base64-encoded secret for storage/logging
     public String getSecretBase64() {
         return java.util.Base64.getEncoder().encodeToString(secretKey.getEncoded());
     }
