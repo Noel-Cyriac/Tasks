@@ -1,5 +1,6 @@
 package com.nc.Task2.jwt;
 
+import com.nc.Task2.repository.InvalidatedTokenRepository;
 import com.nc.Task2.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,8 +18,10 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final InvalidatedTokenRepository invalidatedTokenRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
@@ -31,6 +34,13 @@ public class JwtFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             try {
                 String token = header.substring(7);
+
+                // Check if token is in blacklist
+                if (invalidatedTokenRepository.findByToken(token).isPresent()) {
+                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return; // Stop further processing
+                }
+
                 String username = jwtService.extractUsername(token);
 
                 userRepository.findByUsername(username).ifPresent(user -> {
@@ -41,6 +51,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
             } catch (Exception e) {
                 // Invalid or expired token — ignore and continue
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         }
 
