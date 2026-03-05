@@ -8,7 +8,8 @@ It exposes endpoints to perform mathematical calculations such as addition, subt
 - [Features](#features)  
 - [Tech Stack](#tech-stack)  
 - [Getting Started](#getting-started)  
-- [API Endpoints](#api-endpoints) 
+- [API Endpoints](#api-endpoints)
+- [API Usage Examples](#api-usage-examples)
 - [Project Structure](#project-structure)  
 
 ---
@@ -59,7 +60,162 @@ cd backend-assignment/Task1
 | GET    | `/api/multiply` | Perform multiplication operation         |
 | GET    | `/api/divide`   | Perform division operation               |
 
+---
 
+## API Usage Examples
+
+<details>
+<summary><b>1. Login</b></summary>
+<br>
+Authenticate the user and receive <b>access token</b> and <b>refresh token</b>.
+
+**Endpoint**
+
+```
+POST /auth/login
+```
+
+**Request Body**
+
+```json
+{
+  "username": "user",
+  "password": "password"
+}
+```
+
+**Response**
+
+```json
+{
+  "accessToken": "jwt-access-token",
+  "refreshToken": "jwt-refresh-token"
+}
+```
+
+</details>
+
+
+<details>
+<summary><b>2. Refresh Access Token</b></summary>
+<br>
+Generate a new <b>access token</b> using a <b>refresh token</b>.
+
+**Endpoint**
+
+```
+POST /auth/refresh
+```
+
+**Request Body**
+
+```json
+{
+  "refreshToken": "your-refresh-token"
+}
+```
+
+**Response**
+
+```json
+{
+  "accessToken": "new-access-token"
+}
+```
+
+</details>
+
+---
+
+### Protected Arithmetic APIs
+
+These APIs require a **JWT Access Token**.
+
+Include the token in the request header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+<details>
+<summary><b>3. Addition</b></summary>
+<br>
+  
+**Endpoint**
+
+```
+GET /api/add?a=5&b=3
+```
+
+**Response**
+
+```
+8
+```
+
+</details>
+
+<details>
+<summary><b>4. Subtraction</b></summary>
+<br>
+  
+**Endpoint**
+
+```
+GET /api/subtract?a=10&b=4
+```
+
+**Response**
+
+```
+6
+```
+
+</details>
+
+<details>
+<summary><b>5. Multiplication</b></summary>
+<br>
+  
+**Endpoint**
+
+```
+GET /api/multiply?a=6&b=7
+```
+
+**Response**
+
+```
+42
+```
+
+</details>
+
+<details>
+<summary><b>6. Division</b></summary>
+<br>
+  
+**Endpoint**
+
+```
+GET /api/divide?a=20&b=5
+```
+
+**Response**
+
+```
+4
+```
+
+</details>
+
+---
+
+## Notes
+
+- All `/api/*` endpoints require authentication using a **JWT access token**.
+- The token must be sent in the `Authorization` header.
+- If the access token expires, obtain a new one using the `/auth/refresh` endpoint.
 ---  
 ## Project Structure
 ```
