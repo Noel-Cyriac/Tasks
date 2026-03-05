@@ -1,6 +1,20 @@
 # Backend Assignment
 
-There are mainly two tasks here :
-**Task1** (with complete code on task1-dev)
-**Task2** (with complete code on task2-dev)
+This repository contains the implementation for two specific tasks. Each task is maintained on its own dedicated development branch.
 
+---
+
+## Task 1
+**Branch:** `task1-dev`  
+
+### How to access:
+git checkout task1-dev
+
+---
+
+## Task 2
+**Branch:** `task2-dev`  
+**Status:** Complete
+
+### How to access:
+git checkout task2-dev
