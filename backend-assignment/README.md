@@ -79,7 +79,7 @@ POST /auth/login
 
 ```json
 {
-  "username": "user",
+  "username": "admin",
   "password": "password"
 }
 ```
