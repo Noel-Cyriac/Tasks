@@ -25,7 +25,7 @@ src/main/java/com/nc/Task1
  ```
 ## API Endpoints
 POST /auth/login  
-POST /auth/refresh 
+POST /auth/refresh
 GET /api/add  
 GET /api/subtract  
 GET /api/multiply  
