@@ -211,7 +211,7 @@ GET /api/divide?a=20&b=5
 
 ---
 
-## Notes
+### Notes
 
 - All `/api/*` endpoints require authentication using a **JWT access token**.
 - The token must be sent in the `Authorization` header.
