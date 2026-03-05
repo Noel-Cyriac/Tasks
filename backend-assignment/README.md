@@ -128,7 +128,7 @@ src/main/java/com/nc/Task2
     ├── AuthService.java
     ├── FileService.java
     └── TaskService.java
-└── Task2Application.java (run this file)
+└── Task2Application.java ← (**Run this file to start the application**)
 src/main/resources
 └── application.properties
 .gitignore
