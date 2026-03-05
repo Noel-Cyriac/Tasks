@@ -7,14 +7,13 @@ This repository contains the implementation for two specific tasks. Each task is
 ## Task 1
 **Branch:** `task1-dev`  
 
-### How to access:
+**How to access:**
 git checkout task1-dev
 
 ---
 
 ## Task 2
 **Branch:** `task2-dev`  
-**Status:** Complete
 
-### How to access:
+**How to access:**
 git checkout task2-dev
