@@ -23,26 +23,36 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
     private final InvalidatedTokenRepository invalidatedTokenRepository;
 
+    // Skip JWT validation for public endpoints
     @Override
-    protected void doFilterInternal(HttpServletRequest req,
-                                    HttpServletResponse res,
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        // Skip filter for login, register, refresh
+        return path.startsWith("/api/auth/");
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain chain)
             throws ServletException, IOException {
 
-        String header = req.getHeader("Authorization");
+        String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
             try {
-                String token = header.substring(7);
-
-                // Check if token is in blacklist
+                // Check if token is invalidated
                 if (invalidatedTokenRepository.findByToken(token).isPresent()) {
-                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    return; // Stop further processing
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("Token invalidated");
+                    return;
                 }
 
+                // Extract username from token
                 String username = jwtService.extractUsername(token);
 
+                // Set authentication in Spring Security context
                 userRepository.findByUsername(username).ifPresent(user -> {
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(user, null, List.of());
@@ -50,12 +60,17 @@ public class JwtFilter extends OncePerRequestFilter {
                 });
 
             } catch (Exception e) {
-                // Invalid or expired token — ignore and continue
-                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token invalid or expired");
                 return;
             }
+        } else {
+            // Authorization header missing on protected endpoints
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Access token missing");
+            return;
         }
 
-        chain.doFilter(req, res);
+        chain.doFilter(request, response);
     }
 }

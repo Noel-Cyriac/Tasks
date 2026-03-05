@@ -21,7 +21,7 @@ public class Task {
 
     private String description;
 
-    private boolean completed;
+    private Boolean completed;
 
     //Each task belongs to a user
     @ManyToOne(fetch = FetchType.LAZY)
