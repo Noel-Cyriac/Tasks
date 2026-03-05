@@ -1,10 +1,6 @@
-\# Arithmetic API - Spring Boot Project
+# Backend Assignment
 
-
-
-\## Overview
-
-This is a Spring Boot REST API project that provides basic arithmetic operations.  
-
-It exposes endpoints to perform mathematical calculations such as addition, subtraction, multiplication, and division.
+There are mainly two tasks here :
+**Task1** (with complete code on task1-dev)
+**Task2** (with complete code on task2-dev)
 
