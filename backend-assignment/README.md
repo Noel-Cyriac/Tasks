@@ -54,6 +54,7 @@ This is a **Spring Boot** application that provides user authentication with JWT
 - Java 17+
 - Maven 3+
 - Database (MySQL)
+- Postman or any REST client (for testing API endpoints)
 
 ### Installation
 
