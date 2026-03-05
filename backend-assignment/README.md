@@ -22,16 +22,16 @@ This is a **Spring Boot** application that provides user authentication with JWT
    - Token refresh endpoint
    - Logout invalidates access and refresh tokens
 
-2. **File Management**
+2. **Task Management**
+   - Create, read, update, delete tasks
+   - Each task belongs to a user
+   - Users can only access their own tasks
+     
+3. **File Management**
    - Upload PDF, PNG, JPG files (max 5MB)
    - List all uploaded files for authenticated user
    - Download a file
    - Delete a file
-
-3. **Task Management**
-   - Create, read, update, delete tasks
-   - Each task belongs to a user
-   - Users can only access their own tasks
 
 ---
 
