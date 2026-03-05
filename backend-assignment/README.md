@@ -9,8 +9,9 @@ It exposes endpoints to perform mathematical calculations such as addition, subt
 - JWT (JSON Web Tokens)  
 - Maven  
 - JDK compatible with Jakarta EE (Servlet API)
-```
+  
 ## Project Structure
+```
 src/main/java/com/nc/Task1
  ├── config
  ├── controller
