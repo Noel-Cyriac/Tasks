@@ -63,6 +63,7 @@ git clone https://github.com/Innovatureai/INV_RR_26_Noel-Cyriac.git
 git checkout task2-dev
 cd backend-assignment/Task2
 ```
+---
 ## API Endpoints
 
 ### Authentication
@@ -89,6 +90,7 @@ cd backend-assignment/Task2
 | GET    | `/api/files/download/{id}` | Download file by ID                  |
 | DELETE | `/api/files/{id}`          | Delete file by ID                    |
 
+---
 ## Project Structure
 ```
 src/main/java/com/nc/Task2
