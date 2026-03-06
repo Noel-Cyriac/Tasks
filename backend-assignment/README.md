@@ -306,7 +306,7 @@ GET /api/tasks
 Updates a task owned by the authenticated user.
 
 Fields can be **updated individually** — you may send **any combination of fields** (`title`, `description`, `completed`).  
-You do **not need to include fields that are not being updated**.`id` and `userId` cannot be modified.
+You do **not need to include fields that are not being updated**. `id` and `userId` cannot be modified.
 
 **Endpoint**
 
@@ -314,7 +314,7 @@ You do **not need to include fields that are not being updated**.`id` and `userI
 PUT /api/tasks/{id}
 ```
 
-**Example: Update all fields**
+**Example:** *Update all fields*
 
 **Request Body**
 
@@ -326,7 +326,7 @@ PUT /api/tasks/{id}
 }
 ```
 
-**Example: Update only one field**
+**Example:** *Update only one field*
 
 ```json
 {
