@@ -328,6 +328,8 @@ PUT /api/tasks/{id}
 
 **Example:** *Update only one field*
 
+**Request Body**
+
 ```json
 {
   "completed": true
