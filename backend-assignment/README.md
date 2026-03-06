@@ -63,7 +63,7 @@ cd backend-assignment/Task1
 ---
 
 ## API Usage Examples
-
+### Authentication APIs
 <details>
 <summary><b>1. Login</b></summary>
 <br>
@@ -127,7 +127,7 @@ POST /auth/refresh
 
 ---
 
-### Protected Arithmetic APIs
+### Arithmetic APIs
 
 These APIs require a **JWT Access Token**.
 
