@@ -89,7 +89,8 @@ cd backend-assignment/Task2
 | ------ | -------------------------- | ------------------------------------ |
 | POST   | `/api/files/upload`        | Upload a file (PDF/PNG/JPG)          |
 | GET    | `/api/files/list`          | List all files of authenticated user |
-| GET    | `/api/files/download/{id}` | Download file by ID                  |
+| GET    | `/api/files/link/{id}`     | Generate a temporary download link for a file   |
+| GET    | `/api/files/temp-download` | Download file using the temporary token         |
 | DELETE | `/api/files/{id}`          | Delete file by ID                    |
 
 ---
@@ -465,13 +466,13 @@ Downloads a file owned by the authenticated user.
 **Endpoint**
 
 ```
-GET /api/files/download/{id}
+GET /api/files/link/{id}
 ```
 
 **Response**
-
-File download with proper **Content-Type** and **Content-Disposition** headers.
-
+```
+http://localhost:8080/api/files/temp-download?token=BASE64_ENCODED_TOKEN
+```
 </details>
 
 <br>
