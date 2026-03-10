@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,7 +74,20 @@ public class FileService {
                 .toList();
     }
 
-    // ---------------- DOWNLOAD ----------------
+    // ---------------- GENERATE DOWNLOAD LINK ----------------
+    public String generateDownloadLink(Long id, User user) {
+
+        FileEntity file = getFileForDownload(id, user);
+
+        long expiry = System.currentTimeMillis() + (5 * 60 * 1000); // 5 minutes
+
+        String token = Base64.getEncoder()
+                .encodeToString((file.getId() + ":" + expiry).getBytes());
+
+        return "http://localhost:8080/api/files/temp-download?token=" + token;
+    }
+
+    // ---------------- GET FILE FOR DOWNLOAD ----------------
     public FileEntity getFileForDownload(Long id, User user) {
 
         FileEntity file = fileRepository.findById(id)
@@ -84,6 +98,13 @@ public class FileService {
         }
 
         return file;
+    }
+
+    // ---------------- GET FILE BY ID ----------------
+    public FileEntity getFileById(Long id) {
+
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 
     // ---------------- DELETE ----------------

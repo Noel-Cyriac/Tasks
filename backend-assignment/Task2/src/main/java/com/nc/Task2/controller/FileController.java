@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,7 @@ public class FileController {
 
     private final FileService fileService;
 
+    // ---------------- UPLOAD ----------------
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
@@ -31,18 +33,38 @@ public class FileController {
         return ResponseEntity.ok(fileService.uploadFile(file, user));
     }
 
+    // ---------------- LIST ----------------
     @GetMapping("/list")
     public List<FileResponse> listFiles(@AuthenticationPrincipal User user) {
         return fileService.listFiles(user);
     }
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> downloadFile(
+    // ---------------- GENERATE TEMP DOWNLOAD LINK ----------------
+    @GetMapping("/link/{id}")
+    public ResponseEntity<String> generateDownloadLink(
             @PathVariable Long id,
             @AuthenticationPrincipal User user
-    ) throws IOException {
+    ) {
 
-        FileEntity file = fileService.getFileForDownload(id, user);
+        return ResponseEntity.ok(fileService.generateDownloadLink(id, user));
+    }
+
+    // ---------------- TEMP DOWNLOAD ----------------
+    @GetMapping("/temp-download")
+    public ResponseEntity<byte[]> tempDownload(@RequestParam String token) throws IOException {
+
+        String decoded = new String(Base64.getDecoder().decode(token));
+
+        String[] parts = decoded.split(":");
+
+        Long fileId = Long.parseLong(parts[0]);
+        long expiry = Long.parseLong(parts[1]);
+
+        if (System.currentTimeMillis() > expiry) {
+            throw new RuntimeException("Download link expired");
+        }
+
+        FileEntity file = fileService.getFileById(fileId);
 
         byte[] data = Files.readAllBytes(Paths.get(file.getFilePath()));
 
@@ -53,6 +75,7 @@ public class FileController {
                 .body(data);
     }
 
+    // ---------------- DELETE ----------------
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFile(
             @PathVariable Long id,
